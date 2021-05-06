@@ -8,6 +8,13 @@
 ---
 
 ## 학습 내용
+- Core Data
+- Responder chain
+- Touch event
+- Gesture Recognizer
+- SplitView
+- SplitView Delegate Method
+- Custom Delegate (Protocol)
  
 ---
 
