@@ -3,9 +3,10 @@
 - 기간: 2021.02.15 ~ 2021.03.05
 - 팀원: [꼬말](https://github.com/hakju), [솔](https://github.com/soleJin)
 - [팀 그라운드 룰](https://github.com/hakju/ios-cloud-notes/blob/main/GroundRule.md)
-<br>
-<img src = "https://user-images.githubusercontent.com/50835836/117384904-f1783a00-af1e-11eb-8b49-f9148cdcd9cf.gif" alt = "시연 영상" width = "350" height = "700">
-<br>
+<p>
+ <img src = "https://user-images.githubusercontent.com/50835836/117425115-72eebd00-af5d-11eb-8cd4-9ea4664a5bba.gif" alt = "CompactMode" width = "350" height = "700">
+ <img src = "https://user-images.githubusercontent.com/50835836/117425221-90bc2200-af5d-11eb-8f9d-3586aaf2aad5.gif" alt = "RegularMode" width = "700" height = "350">
+</p>
 
 ---
 
