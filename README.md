@@ -3,7 +3,9 @@
 - 기간: 2021.02.15 ~ 2021.03.05
 - 팀원: [꼬말](https://github.com/hakju), [솔](https://github.com/soleJin)
 - [팀 그라운드 룰](https://github.com/hakju/ios-cloud-notes/blob/main/GroundRule.md)
-<br> 여기에 GIF 넣고
+<br>
+<img src = "https://user-images.githubusercontent.com/50835836/117384904-f1783a00-af1e-11eb-8b49-f9148cdcd9cf.gif" alt = "시연 영상" width = "350" height = "700">
+<br>
 
 ---
 
