@@ -38,4 +38,7 @@
 ---
 
 ## 문제 해결
- 피알 내용 참조
+1. Regular Size인 화면에서 앱이 처음 실행될 때, 메모를 선택하지 않아도 첫번째 메모가 보여지는 에러
+2. DetailView에서 navigationBar가 안보이는 에러
+3. 키보드가 올라올때 view가 가려지는 현상과 키보드를 내리기 위해서 TextView가 아닌 부분을 터치해야만 한다.
+4. 메모의 리스트를 선택할때, MainViewController에서 DetailViewController의 현재 view를 pop한 뒤 선택된 메모 view를 push해주었다.
