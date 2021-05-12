@@ -32,12 +32,25 @@
   | **코드** | 추후의 UI가 많아졌을 때, 유지보수 측면에서 이점이 강하다. | 눈으로 직접 확인할 수 없어서 실수를 유발할 수 있다. |   
   - UI를 코드로 구현하며 오토레이아웃도 작성하였다.
   - 디바이스의 사이즈에 따라서 다른 화면이 보여져야되기 때문에 SplitView를 학습하여 적용해봤다.
-  - 
- 
+- SplitView로 화면을 구성하였는데, Compact Size인 화면에서 앱이 처음 실행될 때 메모를 선택하지 않아도 비어있는 메모가 보여지는 에러가 발생했다.   
+    - <p> <img src = "https://user-images.githubusercontent.com/50835836/118014062-c31ab480-b38d-11eb-8026-755ad44f3ac1.gif" alt = "error1" width = "315" height = "630"> </p> 
+    - [Trouble Shooting](www.naver.com)   
+- 이번에는 Regular Size인 화면의 DetailView(우측 View)에서 navigationBar가 안보이는 에러가 발생했다.
+    - <p> <img src = "https://user-images.githubusercontent.com/50835836/118010239-ce6be100-b389-11eb-866f-724cf546e076.gif" alt = "error2" width = "630" height = "315"> </p>   
+    - [Trouble Shooting](www.naver.com)   
+
 ---
 
 ## 💯 문제 해결 💯
-1. Regular Size인 화면에서 앱이 처음 실행될 때, 메모를 선택하지 않아도 첫번째 메모가 보여지는 에러
+1. Regular Size인 화면에서 앱이 처음 실행될 때, 메모를 선택하지 않아도 비어있는 메모가 보여지는 에러
+    - 원인: SplitView 스택의 최상위가 로드된다. 즉 RegularMode일때의 우측 뷰가 보여지게 되는 것이다.
+    - 해결 방안: 
 2. DetailView에서 navigationBar가 안보이는 에러
+    - 원인: ListView(좌측뷰)에서 ListCell의 메모를 터치하였을 때 선택된 메모의 뷰가 DetailView(우측뷰)를 덮어버린다.
+    - 해결 방안: 
 3. 키보드가 올라올때 view가 가려지는 현상과 키보드를 내리기 위해서 TextView가 아닌 부분을 터치해야만 한다.
+    - 원인: 
+    - 해결 방안: 
 4. 메모의 리스트를 선택할때, MainViewController에서 DetailViewController의 현재 view를 pop한 뒤 선택된 메모 view를 push해주었다.
+    - 원인: 
+    - 해결 방안: 
