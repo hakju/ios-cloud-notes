@@ -4,8 +4,8 @@
 - 팀원: [꼬말](https://github.com/hakju), [솔](https://github.com/soleJin)
 - [팀 그라운드 룰](https://github.com/hakju/ios-cloud-notes/blob/main/GroundRule.md)
 <p align = "center">
- <img src = "https://user-images.githubusercontent.com/50835836/117425115-72eebd00-af5d-11eb-8cd4-9ea4664a5bba.gif" alt = "CompactMode" width = "315" height = "630">
- <img src = "https://user-images.githubusercontent.com/50835836/117425221-90bc2200-af5d-11eb-8f9d-3586aaf2aad5.gif" alt = "RegularMode" width = "630" height = "315">
+ <img src = "https://user-images.githubusercontent.com/50835836/117425115-72eebd00-af5d-11eb-8cd4-9ea4664a5bba.gif" alt = "CompactMode" width = "300" height = "600">
+ <img src = "https://user-images.githubusercontent.com/50835836/117425221-90bc2200-af5d-11eb-8f9d-3586aaf2aad5.gif" alt = "RegularMode" width = "600" height = "300">
 </p>
  
 ---
@@ -33,10 +33,10 @@
   - UI를 코드로 구현하며 오토레이아웃도 작성하였다.
   - 디바이스의 사이즈에 따라서 다른 화면이 보여져야되기 때문에 SplitView를 학습하여 적용해봤다.
 - SplitView로 화면을 구성하였는데, Compact Size인 화면에서 앱이 처음 실행될 때 메모를 선택하지 않아도 비어있는 메모가 보여지는 에러가 발생했다.   
-    - <p> <img src = "https://user-images.githubusercontent.com/50835836/118014062-c31ab480-b38d-11eb-8026-755ad44f3ac1.gif" alt = "error1" width = "315" height = "630"> </p> 
+    - <p> <img src = "https://user-images.githubusercontent.com/50835836/118014062-c31ab480-b38d-11eb-8026-755ad44f3ac1.gif" alt = "error1" width = "300" height = "600"> </p> 
     - [Trouble Shooting](www.naver.com)   
 - 이번에는 Regular Size인 화면의 DetailView(우측 View)에서 navigationBar가 안보이는 에러가 발생했다.
-    - <p> <img src = "https://user-images.githubusercontent.com/50835836/118010239-ce6be100-b389-11eb-866f-724cf546e076.gif" alt = "error2" width = "630" height = "315"> </p>   
+    - <p> <img src = "https://user-images.githubusercontent.com/50835836/118010239-ce6be100-b389-11eb-866f-724cf546e076.gif" alt = "error2" width = "600" height = "300"> </p>   
     - [Trouble Shooting](www.naver.com)   
 
 ---
