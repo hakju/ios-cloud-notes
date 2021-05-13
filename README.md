@@ -4,7 +4,7 @@
 - 팀원: [꼬말](https://github.com/hakju), [솔](https://github.com/soleJin)
 - [팀 그라운드 룰](https://github.com/hakju/ios-cloud-notes/blob/main/GroundRule.md)
 <p>
- <img src = "https://user-images.githubusercontent.com/50835836/117425115-72eebd00-af5d-11eb-8cd4-9ea4664a5bba.gif" alt = "CompactMode" width = "300" height = "600"> <img src = "https://user-images.githubusercontent.com/50835836/117425221-90bc2200-af5d-11eb-8f9d-3586aaf2aad5.gif" alt = "RegularMode" width = "600" height = "300">
+ <img src = "https://user-images.githubusercontent.com/50835836/117425115-72eebd00-af5d-11eb-8cd4-9ea4664a5bba.gif" alt = "CompactMode" width = "295" height = "590"> <img src = "https://user-images.githubusercontent.com/50835836/117425221-90bc2200-af5d-11eb-8f9d-3586aaf2aad5.gif" alt = "RegularMode" width = "590" height = "295">
 </p>
  
 ---
@@ -23,11 +23,12 @@
 ---
 
 ## 💡 어떻게 구현할까? 💡
+### UI 구현
 - 가장 먼저 UI를 그려야겠다고 생각했다. UI를 스토리보드를 통해서 구현할 지, 코드를 통해서 구현할 지 첫번째 고민이 시작되었다. 팀원과 협의한 결과 **코드**로 작성하기로 결정하였다. 그 이유는 스토리보드와 코드로 구현하는 방법 모두 장단점이 있었지만, 코드의 장점에 조금 더 끌렸기 때문이다.    
   - #### UI 구현 방법중 스토리보드, 코드 구현의 차이점
   |  | 장점 | 단점 |
   | :---- | ---- | ---- |
-  | **스토리보드** | 눈으로 볼수있기 때문에 비교적 직관적이다. | 협업시 코드를 merge하는 과정에서 충돌을 유발할 수 있다. |
+  | **스토리보드** | 눈으로 볼수있기 때문에 비교적 직관적이다. | 재사용성이 불리하다. 속성값을 줄수없는 값이있다. |
   | **코드** | 추후의 UI가 많아졌을 때, 유지보수 측면에서 이점이 강하다. | 눈으로 직접 확인할 수 없어서 실수를 유발할 수 있다. |   
   - UI를 코드로 구현하며 오토레이아웃도 작성하였다.
   - 디바이스의 사이즈에 따라서 다른 화면이 보여져야되기 때문에 SplitView를 학습하여 적용해봤다.
