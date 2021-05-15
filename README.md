@@ -1,5 +1,5 @@
 # 📝 동기화 메모장 📝
-- 소개: 디바이스 사이즈에 따라서 보여지는 화면이 다른 메모장이다.
+- 소개: 디바이스 사이즈에 따라서 보여지는 화면이 다른 메모장이다. 클라우드와 연동하여 다른 기기와 동기화할 수 있다.
 - 기간: 2021.02.15 ~ 2021.03.05
 - 팀원: [꼬말](https://github.com/hakju), [솔](https://github.com/soleJin)
 - [팀 그라운드 룰](https://github.com/hakju/ios-cloud-notes/blob/main/GroundRule.md)
@@ -43,8 +43,20 @@
 
 ## 💯 문제 해결 💯
 1. Regular Size인 화면에서 앱이 처음 실행될 때, 메모를 선택하지 않아도 비어있는 메모가 보여지는 에러
-    - 원인: SplitView 스택의 최상위가 로드된다. 즉 RegularMode일때의 우측 뷰가 보여지게 되는 것이다.
-    - 해결 방안: 
+    - 원인: SplitView 스택의 최상위가 로드된다. 현재 SplitView의 스택에는 listView(좌측뷰), detailView(우측뷰) 순서로 되어있기 때문에 앱이 처음 로드될 때 detailView가 보이는 것이다.
+    - 해결 방안: UISplitViewControllerDelegate의 메서드를 활용하여 해결할 수 있었다.   
+     > 매개변수의 secondaryViewController에는 SplitView 인터페이스의 SecondaryViewController가 들어가게 되고, primaryViewController에는 SplitView 인터페이스의 PrimaryViewController 들어가게 된다. 즉, PrimaryViewController는 listViewController, SecondaryViewController는 detailViewController가 해당된다. <br> 이 메서드의 반환값은 Bool 타입으로 fasle일 경우 SecondaryViewController의 content를 인터페이스에 통합하고, true인 경우 SecondaryViewController에 대해 아무작업도 하지않게된다. 
+     - 나의 경우는 앱이 처음 실행되었을 때 listView가 보여지길 원했기 때문에 detailViewController에 대해서는 어떤 작업도 필요하지 않도록 반환값을 true로 설정하였다.
+    ``` swift
+    //MainViewController
+    
+    splitViewController(self, collapseSecondary: detailViewController, onto: listViewController)
+    
+    extension MainViewController: UISplitViewControllerDelegate {
+     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
+        return true
+    }
+    ```
 2. DetailView에서 navigationBar가 안보이는 에러
     - 원인: ListView(좌측뷰)에서 ListCell의 메모를 터치하였을 때 선택된 메모의 뷰가 DetailView(우측뷰)를 덮어버린다.
     - 해결 방안: 
