@@ -39,7 +39,7 @@ extension MainViewController: UISplitViewControllerDelegate {
 
 extension MainViewController: ListViewDelegate {
     func didTapListCell(memo: Memo?, selectedIndex: Int) {
-        (self.viewControllers.last as? UINavigationController)?.popToRootViewController(animated: false)
+        guard let lastView = self.viewControllers.last as? UINavigationController else { return }
         
         let detailView = DetailViewController()
         detailView.detailViewDelegate = self
@@ -48,7 +48,7 @@ extension MainViewController: ListViewDelegate {
         detailView.index = selectedIndex
         detailView.memoTextView.attributedText = attributeText(memo: memo)
         
-        (self.viewControllers.last as? UINavigationController)?.pushViewController(detailView, animated: false)
+        lastView.pushViewController(detailView, animated: false)
     }
     
     private func attributeText(memo: Memo?) -> NSAttributedString? {
