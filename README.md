@@ -28,22 +28,23 @@
   - #### UI 구현 방법중 스토리보드, 코드 구현의 차이점
   |  | 장점 | 단점 |
   | :---- | ---- | ---- |
-  | **스토리보드** | 눈으로 볼수있기 때문에 비교적 직관적이다. | 재사용성이 불리하다. 속성값을 줄수없는 값이있다. |
+  | **스토리보드** | 눈으로 볼수있기 때문에 비교적 직관적이다. | 협업시 충돌이 빈번하고, 재사용성이 불리하다. |
   | **코드** | 추후의 UI가 많아졌을 때, 유지보수 측면에서 이점이 강하다. | 눈으로 직접 확인할 수 없어서 실수를 유발할 수 있다. |   
   - UI를 코드로 구현하며 오토레이아웃도 작성하였다.
   - 디바이스의 사이즈에 따라서 다른 화면이 보여져야되기 때문에 SplitView를 학습하여 적용해봤다.
 - SplitView로 화면을 구성하였는데, Compact Size인 화면에서 앱이 처음 실행될 때 메모를 선택하지 않아도 비어있는 메모가 보여지는 문제가 발생했다.   
     - <p> <img src = "https://user-images.githubusercontent.com/50835836/118014062-c31ab480-b38d-11eb-8026-755ad44f3ac1.gif" alt = "error1" width = "300" height = "600"> </p> 
     - [Trouble Shooting](#1번)   
-- 이번에는 Regular Size인 화면의 DetailView(우측 View)에서 navigationBar가 안보이는 문제가 발생했다.
+- 위 문제를 해결하고 나니 이번에는 Regular Size인 화면의 DetailView(우측 View)에서 navigationBar가 안보이는 문제가 발생했다.
     - <p> <img src = "https://user-images.githubusercontent.com/50835836/118010239-ce6be100-b389-11eb-866f-724cf546e076.gif" alt = "error2" width = "600" height = "300"> </p>   
     - [Trouble Shooting](#2번)   
-
+- 위 문제를 해결하는 과정에서 메모리적 낭비가 발생되었다. 메모가 선택되었을 때 이미 생성되어있던 view를 선택된 메모의 view가 덮어썼기때문에 기존의 view를 pop해준뒤 선택된 메모를 새로운 view로 push해주도록 해결하였다. 이 과정에서 기존의 view는 생성이 된 후 메모가 선택된다면 메모리에서 제거가 되기때문에 기존의 view를 그대로 사용할수는 없는것일까?라는 고민에서 시작되었다.
+    - [Trouble Shooting](#3번)
 ---
 
 ## 💯 문제 해결 💯
 #### 1번
- - Regular Size인 화면에서 앱이 처음 실행될 때, 메모를 선택하지 않아도 비어있는 메모가 보여지는 에러
+ - Regular Size인 화면에서 앱이 처음 실행될 때, 메모를 선택하지 않아도 비어있는 메모가 보여지는 문제
     - 원인: SplitView 스택의 최상위가 로드된다. 현재 SplitView의 스택에는 listView(좌측뷰), detailView(우측뷰) 순서로 되어있기 때문에 앱이 처음 로드될 때 detailView가 보이는 것이다.
     - 해결 방안: UISplitViewControllerDelegate의 메서드를 활용하여 해결할 수 있었다.   
       > 매개변수의 secondaryViewController에는 SplitView 인터페이스의 SecondaryViewController가 들어가게 되고, primaryViewController에는 SplitView 인터페이스의 PrimaryViewController 들어가게 된다. 즉, PrimaryViewController는 listViewController, SecondaryViewController는 detailViewController가 해당된다. <br> 이 메서드의 반환값은 Bool 타입으로 fasle일 경우 SecondaryViewController의 content를 인터페이스에 통합하고, true인 경우 SecondaryViewController에 대해 아무작업도 하지않게된다. 
@@ -60,7 +61,7 @@
     ```
 
 #### 2번
- - DetailView에서 navigationBar가 안보이는 에러
+ - DetailView에서 navigationBar가 안보이는 문제
     - 원인: ListView(좌측뷰)에서 ListCell의 메모를 터치하였을 때 선택된 메모의 뷰가 DetailView(우측뷰)를 덮어버린다.
     - 해결 방안: 이미 생성되어있는 detailView에 textView를 덮어쓰고 있기 때문에 발생한 것이라 파악하고 SplitView(viewControllers) 스택의 최상위에 있는 detailView(우측뷰)를 pop해준다. 선택된 메모를 navigationViewController로 SplitView 스택에 push해준다. 
      ``` swift
@@ -80,5 +81,19 @@
 #### 3번
  - 위 2번 문제의 연장으로 메모를 선택할때, MainViewController에서 DetailViewController의 현재 view를 pop한 뒤 선택된 메모 view를 push해주었다. 기존에 생성되어있는 detailView를 사용할 수는 없을까?라는 고민이 있었다.
     - 원인: 이전 DetailViewController를 pop해서 메모리에서 삭제하고 새로운 DetailViewController를 초기화해서 셋팅하고 push 하고 있기 때문에 메모리가 낭비된다고 생각했다.
-    - 해결 방안: 
+    - 해결 방안: 기존에 생성되어있는 view를 pop하지 않고 기존 view에 그대로 push하도록 코드를 개선하였다.
+     ``` swift 
+     func didTapListCell(memo: Memo?, selectedIndex: Int) {
+        guard let lastView = self.viewControllers.last as? UINavigationController else { return }
+        
+        let detailView = DetailViewController()
+        detailView.detailViewDelegate = self
+        detailView.view.backgroundColor = .white
+        guard let memo = memo else { return }
+        detailView.index = selectedIndex
+        detailView.memoTextView.attributedText = attributeText(memo: memo)
+        
+        lastView.pushViewController(detailView, animated: false)
+    }
+    ```
 
