@@ -83,15 +83,14 @@
     - 원인: 이전 DetailViewController를 pop해서 메모리에서 삭제하고 새로운 DetailViewController를 초기화해서 셋팅하고 push 하고 있기 때문에 메모리가 낭비된다고 생각했다.
     - 해결 방안: 기존에 생성되어있는 view를 pop하지 않고 기존 view에 그대로 push하도록 코드를 개선하였다.
      ``` swift 
-     func didTapListCell(memo: Memo?, selectedIndex: Int) {
+     func didTapListCell(memo: Memo?) {
         guard let lastView = self.viewControllers.last as? UINavigationController else { return }
         
         let detailView = DetailViewController()
-        detailView.detailViewDelegate = self
         detailView.view.backgroundColor = .white
         guard let memo = memo else { return }
-        detailView.index = selectedIndex
-        detailView.memoTextView.attributedText = attributeText(memo: memo)
+        detailView.memoTextView.text = "\(memo.title)\n\n"
+        detailView.memoTextView.text += memo.contents
         
         lastView.pushViewController(detailView, animated: false)
     }
