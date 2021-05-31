@@ -174,4 +174,101 @@
         lastView.pushViewController(detailView, animated: false)
     }
     ```
+### Core Data
+- 앱이 종료되고 난 후에 다시 앱이 실행되었을 때, 메모들이 초기화되고 있었다. 앱을 다시 실행하더라도 메모가 저장되어있게 하고싶었다. 팀원과 코어데이터를 사용하기로 했다.
+    
+    - CRUD를 구현하였다.
+    
+    ``` swift
+    func read() {
+        do {
+            self.list = try context.fetch(Memo.fetchRequest())
+        }
+        catch {}
+    }
+    
+    func create(text: String?) {
+        guard let text = text else { return }
+        let newTitle = spiltText(text: text).title
+        let newContents = spiltText(text: text).contents
+        let newMemo = Memo(context: context)
+        newMemo.title = newTitle
+        newMemo.contents = newContents
+        newMemo.lastModifiedDate = Date()
+        
+        do {
+            try context.save()
+            read()
+        }
+        catch {}
+    }
+    
+    func update(memo: Memo?, text: String?) {
+        guard let memo = memo else { return }
+        guard let text = text else { return }
+        let updatedTitle = spiltText(text: text).title
+        let updatedContents = spiltText(text: text).contents
+        
+        memo.title = updatedTitle
+        memo.contents = updatedContents
+        memo.lastModifiedDate = Date()
+        
+        do {
+            try context.save()
+            read()
+        }
+        catch {}
+    }
+    
+    func delete(memo: Memo?) {
+        guard let memo = memo else { return }
+        context.delete(memo)
+        
+        do {
+            try context.save()
+            read()
+        }
+        catch {}
+    }
+    ```
+
+### Action Sheet
+- 삭제와 공유하는 버튼을 만들어주었다.
+    
+    <img src = "https://user-images.githubusercontent.com/50835836/120177591-8e3ea680-c243-11eb-8abf-470d2001a1bf.gif" alt = "Action Sheet Video" width = "590" height = "295">
+    
+    - 처음 더보기 버튼을 누르면 어떤일을 수행할 지, 액션 시트를 통해서 결정하게된다.
+    
+    - 메모를 삭제할 때, 경각심을 높이기위해 alert창으로 한번 더 물어본다.
+    
+    ``` swift
+    @objc private func didTapEllipsisButton() {
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        sheet.addAction(UIAlertAction(title: "Share...", style: .default, handler: { _ in
+            self.didTapShareButton()
+        }))
+        sheet.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+            self.didTapCheckDeleteButton()
+        }))
+        self.present(sheet, animated: true )
+    }
+    
+    private func didTapCheckDeleteButton() {
+        let alret = UIAlertController(title: "진짜요?", message: "정말로 삭제하시겠어요?", preferredStyle: .alert)
+        alret.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        alret.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
+            self.didTapDeleteButton()
+        }))
+        self.present(alret, animated: true)
+    }
+    
+    private func didTapDeleteButton() {
+        guard let index = index else { return }
+        let memo = MemoData.shared.list[index]
+        MemoData.shared.delete(memo: memo)
+        self.navigationController?.popViewController(animated: false)
+        self.detailViewDelegate?.didDeleteMemo()
+    }
+    ```
 
